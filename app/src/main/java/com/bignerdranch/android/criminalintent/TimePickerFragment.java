@@ -32,11 +32,17 @@ public class TimePickerFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         Date date = (Date) getArguments().getSerializable(ARG_DATE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int hour = calendar.get(calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_time,null);
 
         mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_time_picker);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        mTimePicker.setCurrentHour(hour);
+        mTimePicker.setCurrentMinute(minute);
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.time_picker_title)
