@@ -26,6 +26,8 @@ public class CrimeFragment extends Fragment {
     private static final String DIALOG_TIME = "DialogTime";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_TIME = 1;
+    public static final String FORMAT_DATE = "EEEE, dd MMM yyyy,";
+    public static final String FORMAT_TIME = "HH:mm";
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -76,7 +78,6 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-//                DatePickerFragment dialog = new DatePickerFragment();
                 DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(manager,DIALOG_DATE);
@@ -90,7 +91,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getTime());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
                 dialog.show(manager, DIALOG_TIME);
             }
@@ -110,13 +111,13 @@ public class CrimeFragment extends Fragment {
 
     private void updateTime() {
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        mTimeButton.setText(df.format("HH:mm", mCrime.getDate()));
+        mTimeButton.setText(df.format(FORMAT_TIME, mCrime.getTime()));
 
     }
 
     private void updateDate() {
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        mDateButton.setText(df.format("EEEE, dd MMM yyyy", mCrime.getDate()));
+        mDateButton.setText(df.format(FORMAT_DATE, mCrime.getDate()));
     }
 
     @Override
@@ -130,8 +131,8 @@ public class CrimeFragment extends Fragment {
             updateDate();
         }
         if(requestCode == REQUEST_TIME){
-            Date date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
-            mCrime.setDate(date);
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mCrime.setTime(time);
             updateTime();
         }
     }

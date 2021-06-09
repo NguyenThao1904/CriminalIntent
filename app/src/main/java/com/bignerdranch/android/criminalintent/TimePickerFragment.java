@@ -13,17 +13,18 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TimePickerFragment extends DialogFragment {
 
-    private static final  String ARG_DATE = "date";
-    public static final String EXTRA_TIME = "time";
+    private static final  String ARG_TIME = "time";
+    public static final String EXTRA_TIME = "com.bignerdranch.android.criminalintent.time";
 
     private TimePicker mTimePicker;
 
-    public static TimePickerFragment newInstance(Date date){
+    public static TimePickerFragment newInstance(Date time){
         Bundle args = new Bundle();
-        args.putSerializable(ARG_DATE, date);
+        args.putSerializable(ARG_TIME, time);
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setArguments(args);
         return fragment;
@@ -31,10 +32,10 @@ public class TimePickerFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        Date date = (Date) getArguments().getSerializable(ARG_DATE);
+        Date time = (Date) getArguments().getSerializable(ARG_TIME);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(time);
         int hour = calendar.get(calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -51,20 +52,20 @@ public class TimePickerFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         int hour = mTimePicker.getCurrentHour();
                         int minute = mTimePicker.getCurrentMinute();
-                        Date date = new Date();
-                        date.setHours(hour);
-                        date.setMinutes(minute);
-                        sendResult(Activity.RESULT_OK, date);
+                        Date time = new Date();
+                        time.setHours(hour);
+                        time.setMinutes(minute);
+                        sendResult(Activity.RESULT_OK, time);
                     }
                 })
                 .create();
     }
-    private void sendResult(int resultCode, Date date) {
+    private void sendResult(int resultCode, Date time) {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_TIME, date);
+        intent.putExtra(EXTRA_TIME, time);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

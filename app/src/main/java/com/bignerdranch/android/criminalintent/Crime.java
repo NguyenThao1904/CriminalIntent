@@ -8,14 +8,14 @@ public class Crime {
     private UUID mId;
     private String mTitle;
     private Date mDate;
-    private int mHour;
-    private int mMinute;
+    private Date mTime;
     private boolean mSolved;
 
     public Crime(){
         //Generate unique identifier
         mId = UUID.randomUUID();
         mDate = new Date();
+        mTime = new Date();
     }
 
     public UUID getId() {
@@ -34,27 +34,15 @@ public class Crime {
         return mDate;
     }
 
-    public int getHour() {
-        return mHour;
-    }
-
-    public void setHour(int mHour) {
-        this.mHour = mHour;
-    }
-    public int getMinute() {
-        return mMinute;
-    }
-
-    public void setMinute(int mMinute) {
-        this.mMinute = mMinute;
-    }
     public boolean isSolved() {
         return mSolved;
     }
 
-    public void setDate(Date date) {
-        mDate = date;
-    }
+    public void setDate(Date date) {mDate = date;}
+
+    public Date getTime() {return mTime;}
+
+    public void setTime(Date time) {mTime = time;}
 
     public void setSolved(boolean solved) {
         mSolved = solved;

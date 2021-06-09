@@ -63,7 +63,8 @@ public class CrimeListFragment extends Fragment {
             mTitleTextView.setText(mCrime.getTitle());
             //mDateTextView.setText(mCrime.getDate().toString());
             android.text.format.DateFormat df = new android.text.format.DateFormat();
-            mDateTextView.setText(df.format("EEEE, dd MMM yyyy, hh:mm z", mCrime.getDate()));
+            mDateTextView.
+                    setText(df.format("EEEE, dd MMM yyyy,", mCrime.getDate()) + " " + df.format("HH:mm z",mCrime.getTime()));
             mSolvedCheckbox.setChecked(mCrime.isSolved());
         }
         @Override
