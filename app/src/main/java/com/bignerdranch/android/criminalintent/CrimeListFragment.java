@@ -21,10 +21,14 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+    private static final String SAVED_NUMBER_FOR_TRIGGER = "number_trigger";
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private TextView mTextView;
     private  boolean mSubtitleVisible;
     private int position;
+    private int savedTrigger;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -37,11 +41,22 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
 
         mCrimeRecyclerView = (RecyclerView) view.findViewById((R.id.crime_recycle_view));
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mTextView = (TextView) view.findViewById(R.id.no_crime_there);
+        if(savedInstanceState != null) {
+            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
+        }
+
+        if(CrimeLab.get(getActivity()).getCrimes().size() == 0) {
+            mTextView.setVisibility(View.VISIBLE);
+        } else {
+            updateUI();
+        }
 
         updateUI();
         return view;
@@ -91,7 +106,7 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format, crimeCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
         if(!mSubtitleVisible){
             subtitle = null;
         }
