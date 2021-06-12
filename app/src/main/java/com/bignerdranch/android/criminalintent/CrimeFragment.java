@@ -75,6 +75,11 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
+    public  void onPause(){
+        super.onPause();
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 

@@ -21,13 +21,11 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
-    private static final String SAVED_NUMBER_FOR_TRIGGER = "number_trigger";
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private TextView mTextView;
     private  boolean mSubtitleVisible;
     private int position;
-    private int savedTrigger;
 
 
     @Override
@@ -120,6 +118,7 @@ public class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else{
+            mAdapter.setCrimes(crimes);
             mAdapter.notifyItemChanged(position);
         }
         updateSubtitle();
@@ -140,7 +139,6 @@ public class CrimeListFragment extends Fragment {
         public void bindCrime(Crime crime){
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            //mDateTextView.setText(mCrime.getDate().toString());
             android.text.format.DateFormat df = new android.text.format.DateFormat();
             mDateTextView.
                     setText(df.format("EEEE, dd MMM yyyy,", mCrime.getDate()) + " " + df.format("HH:mm z",mCrime.getTime()));
@@ -177,6 +175,9 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+        public void setCrimes(List<Crime> crimes){
+            mCrimes = crimes;
         }
     }
 
