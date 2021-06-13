@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bignerdranch.android.criminalintent">
 
+    //requesting external storage permission
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18"/>
+    <uses-feature android:name="android.hardware.camera2"
+        android:required="false"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +27,18 @@
             android:label="@string/app_name"
             android:parentActivityName=".CrimeListActivity">
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.bignerdranch.android.criminalintent.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+
+        </provider>
+
     </application>
 
 </manifest>
