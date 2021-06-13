@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -15,6 +16,8 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static android.content.ContentValues.TAG;
 
 public class DatePickerFragment extends DialogFragment {
 
@@ -54,6 +57,7 @@ public class DatePickerFragment extends DialogFragment {
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
                         sendResult(Activity.RESULT_OK, date);
+
                     }
                 })
                 .create();
@@ -63,6 +67,7 @@ public class DatePickerFragment extends DialogFragment {
             return;
         }
 
+        Log.d(TAG, "sendResult: "+ resultCode);
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE, date);
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent);

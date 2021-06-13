@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
@@ -14,6 +15,8 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static android.content.ContentValues.TAG;
 
 public class TimePickerFragment extends DialogFragment {
 
@@ -61,6 +64,7 @@ public class TimePickerFragment extends DialogFragment {
                 .create();
     }
     private void sendResult(int resultCode, Date time) {
+        Log.d(TAG, "sendResult: "+ resultCode);
         if (getTargetFragment() == null) {
             return;
         }
