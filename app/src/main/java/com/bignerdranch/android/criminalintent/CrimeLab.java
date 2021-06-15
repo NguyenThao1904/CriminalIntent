@@ -99,6 +99,7 @@ public class CrimeLab {
         values.put(CrimeTable.Cols.TIME, crime.getTime().getTime());
         values.put(CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
         values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
+        values.put(CrimeTable.Cols.CALL_SUSPECT, crime.getCallSuspect());
 
         return values;
     }

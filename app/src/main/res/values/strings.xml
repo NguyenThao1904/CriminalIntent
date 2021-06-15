@@ -18,6 +18,7 @@
     <string name="no_crimes_add">There are no crimes</string>
     <string name="crime_suspect_text"> Choose Suspect </string>
     <string name="crime_report_text">Send Crime Report</string>
+    <string name="crime_call_suspect_text">Phone number</string>
     <string name="crime_report">%1$s!
     The crime was discovered on %2$s. %3$s, and %4$s
     </string>
@@ -25,6 +26,7 @@
     <string name="crime_report_unsolved">The case is not solved</string>
     <string name="crime_report_no_suspect">there is no suspect.</string>
     <string name="crime_report_suspect">the suspect id %s.</string>
+    <string name="crime_call_no_phone_number">No phone number</string>
     <string name="crime_report_subject">CriminalIntent Crime Report</string>
     <string name="send_report">Send crime report via</string>
     <string name="crime_image">Image of crime: </string>

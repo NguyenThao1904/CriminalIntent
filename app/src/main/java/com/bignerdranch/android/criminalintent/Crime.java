@@ -10,7 +10,9 @@ public class Crime {
     private Date mDate;
     private Date mTime;
     private boolean mSolved;
+    private String mSuspectId;
     private String mSuspect;
+    private String mCallSuspect;
 
     public Crime(){
         //Generate unique identifier
@@ -53,6 +55,14 @@ public class Crime {
         mSolved = solved;
     }
 
+    public String getSuspectId() {
+        return mSuspectId;
+    }
+
+    public void setSuspectId(String suspectId) {
+        mSuspectId = suspectId;
+    }
+
     public String getSuspect() {
         return mSuspect;
     }
@@ -63,5 +73,13 @@ public class Crime {
 
     public String getPhotoFileName(){
         return "IMG_" + getId().toString() + ".jpg";
+    }
+
+    public String getCallSuspect() {
+        return mCallSuspect;
+    }
+
+    public void setCallSuspect(String callSuspect) {
+        mCallSuspect = callSuspect;
     }
 }
