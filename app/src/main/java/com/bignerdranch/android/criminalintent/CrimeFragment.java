@@ -94,6 +94,7 @@ public class CrimeFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime, menu);
+
     }
 
     public  boolean onOptionsItemSelected (MenuItem item){
@@ -219,6 +220,8 @@ public class CrimeFragment extends Fragment {
 
 
         mCallSuspectButton = (Button) v.findViewById(R.id.crime_call_suspect);
+        //set enable call_suspect button by phone number
+        handleCallSuspectButton(mCrime.getCallSuspect());
         mCallSuspectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,15 +231,12 @@ public class CrimeFragment extends Fragment {
                 startActivity(i);
             }
         });
-//        if(mCrime.getCallSuspect() != null){
-//            mCallSuspectButton.setText(mCrime.getCallSuspect());
-//        }
+
         PackageManager packageManager = getActivity().getPackageManager();
         if(packageManager.resolveActivity(pickContact, PackageManager.MATCH_DEFAULT_ONLY) == null){
             mSuspectButton.setEnabled(false);
             mCallSuspectButton.setEnabled(false);
         }
-//        handleCallSuspectButton(mCrime.getCallSuspect());
 
         // Setup photo taking abilities
         mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
@@ -296,6 +296,11 @@ public class CrimeFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void updateCrime(){
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
     }
 
     private void updateTime() {
@@ -381,7 +386,7 @@ private void updatePhotoView(int width, int height) {
                 String suspectId = c.getString(
                         c.getColumnIndex(ContactsContract.Contacts._ID));
                 mCrime.setSuspect(suspect);
-                mSuspectButton.setText(suspect);
+                mSuspectButton.setText(mCrime.getSuspect());
                 mCrime.setSuspectId(suspectId);
                 getContactPhoneNumberWrapper();
 
@@ -393,6 +398,7 @@ private void updatePhotoView(int width, int height) {
             updatePhotoView(mPhotoView.getWidth(), mPhotoView.getHeight());
         }
         updateCrime();
+        handleCallSuspectButton(mCrime.getCallSuspect());
 
     }
 
@@ -419,6 +425,7 @@ private void updatePhotoView(int width, int height) {
         } else {
             mCrime.setCallSuspect(getContactPhoneNumber());
         }
+        mCallSuspectButton.setEnabled(true);
     }
 
 
@@ -446,11 +453,38 @@ private void updatePhotoView(int width, int height) {
         return phoneNumber;
     }
 
+    //Method phan hoi cho phep permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mCrime.setCallSuspect(getContactPhoneNumber());
+                    handleCallSuspectButton(mCrime.getCallSuspect());
 
+                } else {
 
-    private void updateCrime(){
-        CrimeLab.get(getActivity()).updateCrime(mCrime);
-        mCallbacks.onCrimeUpdated(mCrime);
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+    private void handleCallSuspectButton(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            mCallSuspectButton.setText(getString(R.string.crime_call_no_phone_number));
+            mCallSuspectButton.setEnabled(false);
+        } else {
+            mCallSuspectButton.setText(getString(R.string.crime_call_suspect, mCrime.getCallSuspect()));
+            mCallSuspectButton.setEnabled(true);
+        }
     }
 
 

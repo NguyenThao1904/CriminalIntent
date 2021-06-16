@@ -106,8 +106,12 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
-//                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-//                startActivity(intent);
+                // set visible for "there no crimes"
+                if(CrimeLab.get(getActivity()).getCrimes().size() == 0) {
+                    mTextView.setVisibility(View.VISIBLE);
+                } else {
+                    mTextView.setVisibility(View.INVISIBLE);
+                }
                 updateUI();
                 mCallbacks.onCrimeSelected(crime);
                 return true;

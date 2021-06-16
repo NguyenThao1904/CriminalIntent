@@ -21,10 +21,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
 
-    @Override
-    public void onCrimeUpdated(Crime crime){
 
-    }
 
     public static Intent newIntent(Context packageContext, UUID crimeId){
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
@@ -61,5 +58,8 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
             }
         }
     }
+    @Override
+    public void onCrimeUpdated(Crime crime){
 
+    }
 }
